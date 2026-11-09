@@ -1,0 +1,192 @@
+{
+  "scenario_id": "S13",
+  "title": "Do not share memory between users",
+  "part": 3,
+  "status_profile": "normal",
+  "graph_variant": null,
+  "model": "OpenAI via langchain-openai, model gpt-6-luna",
+  "command": "python -m helpdesk scenario S13 --model openai --out outputs\\real-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 13196,
+      "user_id": "demo-user-a",
+      "thread_id": "isolation-a",
+      "status_profile": "normal",
+      "message": "Please remember that I prefer replies in Kazakh. I have a Wi-Fi problem.",
+      "reply": "Жауаптарды қазақ тілінде беремін. Wi‑Fi бойынша мына қадамдарды орындап көріңіз:\n\n1. Wi‑Fi қосулы, ал ұшақ режимі өшірулі екенін тексеріңіз.\n2. **Campus-Demo** желісін таңдаңыз.\n3. Қосылмаса, құрылғыдағы сақталған желіні ұмытып, қайта қосылып көріңіз.\n\nҚандай қиындық болып жатыр: желі көрінбей ме, қосылмай ма, әлде интернет істемей ме? Осы қадамдардың қайсысын орындап көрдіңіз?",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "save_user_preference",
+                    "args": {
+                      "language": "Kazakh"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"saved\": true, \"key\": \"language\", \"value\": \"Kazakh\", \"user_id\": \"demo-user-a\"}",
+                "tool": "save_user_preference",
+                "result": {
+                  "saved": true,
+                  "key": "language",
+                  "value": "Kazakh",
+                  "user_id": "demo-user-a"
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 1,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "user_memory[demo-user-a]: wrote language=Kazakh"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "find_instructions",
+                    "args": {
+                      "topic": "wifi"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+                "tool": "find_instructions",
+                "result": {
+                  "found": true,
+                  "topic": "wifi",
+                  "title": "Connect to the practice campus network",
+                  "instruction_id": "GUIDE-WIFI",
+                  "steps": [
+                    "Check that Wi-Fi is enabled and airplane mode is off.",
+                    "Select the fictional Campus-Demo network.",
+                    "If connection fails, forget the saved network and try connecting again.",
+                    "If the problem remains, check the service status before preparing a ticket."
+                  ]
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 2,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "user_memory[demo-user-a]: wrote language=Kazakh",
+              "reference_file: helpdesk.json GUIDE-WIFI"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Жауаптарды қазақ тілінде беремін. Wi‑Fi бойынша мына қадамдарды орындап көріңіз:\n\n1. Wi‑Fi қосулы, ал ұшақ режимі өшірулі екенін тексеріңіз.\n2. **Campus-Demo** желісін таңдаңыз.\n3. Қосылмаса, құрылғыдағы сақталған желіні ұмытып, қайта қосылып көріңіз.\n\nҚандай қиындық болып жатыр: желі көрінбей ме, қосылмай ма, әлде интернет істемей ме? Осы қадамдардың қайсысын орындап көрдіңіз?"
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty",
+        "user_memory[demo-user-a]: wrote language=Kazakh",
+        "reference_file: helpdesk.json GUIDE-WIFI"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    },
+    {
+      "index": 1,
+      "action": "message",
+      "pid": 13196,
+      "user_id": "demo-user-b",
+      "thread_id": "isolation-b",
+      "status_profile": "normal",
+      "message": "Have I told you a preferred language or a previous problem?",
+      "reply": "No. You haven’t told me a preferred language or mentioned a previous problem in this conversation.",
+      "nodes": [
+        "load_context",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-b]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "No. You haven’t told me a preferred language or mentioned a previous problem in this conversation."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-b]: empty"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    }
+  ]
+}

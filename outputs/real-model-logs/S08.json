@@ -1,0 +1,131 @@
+{
+  "scenario_id": "S08",
+  "title": "Status source unavailable",
+  "part": 2,
+  "status_profile": "status_unavailable",
+  "graph_variant": null,
+  "model": "OpenAI via langchain-openai, model gpt-6-luna",
+  "command": "python -m helpdesk scenario S08 --model openai --out outputs\\real-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 5576,
+      "user_id": "demo-user-a",
+      "thread_id": "s08",
+      "status_profile": "status_unavailable",
+      "message": "Check whether Wi-Fi is down. If it is operating, prepare a ticket. I already enabled Wi-Fi and reconnected, with no success.",
+      "reply": "I can’t confirm whether Wi-Fi is operating because the status source is unavailable, so I haven’t prepared a ticket. You said you enabled Wi-Fi and reconnected, but did you also check that airplane mode is off, and which network did you reconnect to? Would you like me to prepare a local ticket draft anyway? Nothing would be sent to a real helpdesk.",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "check_service_status",
+                    "args": {
+                      "service": "wifi"
+                    }
+                  },
+                  {
+                    "name": "find_instructions",
+                    "args": {
+                      "topic": "wifi"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"service\": \"wifi\", \"status\": \"unknown\", \"message\": \"The demo Wi-Fi status source is unavailable.\", \"profile\": \"status_unavailable\"}",
+                "tool": "check_service_status",
+                "result": {
+                  "found": true,
+                  "service": "wifi",
+                  "status": "unknown",
+                  "message": "The demo Wi-Fi status source is unavailable.",
+                  "profile": "status_unavailable"
+                }
+              },
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+                "tool": "find_instructions",
+                "result": {
+                  "found": true,
+                  "topic": "wifi",
+                  "title": "Connect to the practice campus network",
+                  "instruction_id": "GUIDE-WIFI",
+                  "steps": [
+                    "Check that Wi-Fi is enabled and airplane mode is off.",
+                    "Select the fictional Campus-Demo network.",
+                    "If connection fails, forget the saved network and try connecting again.",
+                    "If the problem remains, check the service status before preparing a ticket."
+                  ]
+                }
+              }
+            ],
+            "status_checks": {
+              "wifi": {
+                "service": "wifi",
+                "status": "unknown",
+                "message": "The demo Wi-Fi status source is unavailable.",
+                "profile": "status_unavailable"
+              }
+            },
+            "tool_rounds": 1,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "reference_file: service_status.json profile=status_unavailable",
+              "reference_file: helpdesk.json GUIDE-WIFI"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "I can’t confirm whether Wi-Fi is operating because the status source is unavailable, so I haven’t prepared a ticket. You said you enabled Wi-Fi and reconnected, but did you also check that airplane mode is off, and which network did you reconnect to? Would you like me to prepare a local ticket draft anyway? Nothing would be sent to a real helpdesk."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty",
+        "reference_file: service_status.json profile=status_unavailable",
+        "reference_file: helpdesk.json GUIDE-WIFI"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    }
+  ]
+}

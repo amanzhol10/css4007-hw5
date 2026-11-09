@@ -1,0 +1,106 @@
+{
+  "scenario_id": "S14",
+  "title": "Password recovery outage",
+  "part": 2,
+  "status_profile": "recovery_outage",
+  "graph_variant": null,
+  "model": "OpenAI via langchain-openai, model gpt-6-luna",
+  "command": "python -m helpdesk scenario S14 --model openai --out outputs\\real-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 15280,
+      "user_id": "demo-user-a",
+      "thread_id": "s14",
+      "status_profile": "recovery_outage",
+      "message": "My password recovery page is unavailable. Check the service status. Is there a known problem?",
+      "reply": "Yes. The demo account-recovery service is currently unavailable, so there’s a known problem. The status information doesn’t give a repair time.",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "check_service_status",
+                    "args": {
+                      "service": "account_recovery"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"service\": \"account_recovery\", \"status\": \"outage\", \"message\": \"The demo account-recovery service is unavailable. The fixture gives no repair time.\", \"profile\": \"recovery_outage\"}",
+                "tool": "check_service_status",
+                "result": {
+                  "found": true,
+                  "service": "account_recovery",
+                  "status": "outage",
+                  "message": "The demo account-recovery service is unavailable. The fixture gives no repair time.",
+                  "profile": "recovery_outage"
+                }
+              }
+            ],
+            "status_checks": {
+              "account_recovery": {
+                "service": "account_recovery",
+                "status": "outage",
+                "message": "The demo account-recovery service is unavailable. The fixture gives no repair time.",
+                "profile": "recovery_outage"
+              }
+            },
+            "tool_rounds": 1,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "reference_file: service_status.json profile=recovery_outage"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Yes. The demo account-recovery service is currently unavailable, so there’s a known problem. The status information doesn’t give a repair time."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty",
+        "reference_file: service_status.json profile=recovery_outage"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    }
+  ]
+}

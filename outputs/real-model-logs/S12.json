@@ -1,0 +1,199 @@
+{
+  "scenario_id": "S12",
+  "title": "Preference across threads without replay",
+  "part": 3,
+  "status_profile": "normal",
+  "graph_variant": null,
+  "model": "OpenAI via langchain-openai, model gpt-6-luna",
+  "command": "python -m helpdesk scenario S12 --model openai --out outputs\\real-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 8300,
+      "user_id": "demo-user-a",
+      "thread_id": "preference-a1",
+      "status_profile": "normal",
+      "message": "Please remember that I prefer replies in Kazakh. I have a Wi-Fi problem.",
+      "reply": "Жауаптарды қазақ тілінде беремін. Wi‑Fi бойынша: Wi‑Fi қосулы, ұшақ режимі өшірулі екенін тексеріп, **Campus-Demo** желісіне қосылып көріңіз. Қосылмаса, сақталған желіні ұмытып, қайта қосылыңыз.\n\nҚандай мәселе болып тұр — желі көрінбей ме, қосылмай ма, әлде интернет жоқ па? Осы қадамдардың қайсысын орындап көрдіңіз?",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "save_user_preference",
+                    "args": {
+                      "language": "Kazakh"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"saved\": true, \"key\": \"language\", \"value\": \"Kazakh\", \"user_id\": \"demo-user-a\"}",
+                "tool": "save_user_preference",
+                "result": {
+                  "saved": true,
+                  "key": "language",
+                  "value": "Kazakh",
+                  "user_id": "demo-user-a"
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 1,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "user_memory[demo-user-a]: wrote language=Kazakh"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "find_instructions",
+                    "args": {
+                      "topic": "wifi"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+                "tool": "find_instructions",
+                "result": {
+                  "found": true,
+                  "topic": "wifi",
+                  "title": "Connect to the practice campus network",
+                  "instruction_id": "GUIDE-WIFI",
+                  "steps": [
+                    "Check that Wi-Fi is enabled and airplane mode is off.",
+                    "Select the fictional Campus-Demo network.",
+                    "If connection fails, forget the saved network and try connecting again.",
+                    "If the problem remains, check the service status before preparing a ticket."
+                  ]
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 2,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "user_memory[demo-user-a]: wrote language=Kazakh",
+              "reference_file: helpdesk.json GUIDE-WIFI"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Жауаптарды қазақ тілінде беремін. Wi‑Fi бойынша: Wi‑Fi қосулы, ұшақ режимі өшірулі екенін тексеріп, **Campus-Demo** желісіне қосылып көріңіз. Қосылмаса, сақталған желіні ұмытып, қайта қосылыңыз.\n\nҚандай мәселе болып тұр — желі көрінбей ме, қосылмай ма, әлде интернет жоқ па? Осы қадамдардың қайсысын орындап көрдіңіз?"
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty",
+        "user_memory[demo-user-a]: wrote language=Kazakh",
+        "reference_file: helpdesk.json GUIDE-WIFI"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    },
+    {
+      "index": 1,
+      "action": "restart_process",
+      "terminated_pid": 8300
+    },
+    {
+      "index": 2,
+      "action": "message",
+      "pid": 16132,
+      "user_id": "demo-user-a",
+      "thread_id": "preference-a2",
+      "status_profile": "normal",
+      "message": "Which language did I ask you to use? What can you help with?",
+      "reply": "Сіз жауаптарды қазақ тілінде алуды сұрадыңыз. Мен Wi‑Fi ақауларын шешуге, құпиясөзді қалпына келтіру жолдарын көрсетуге, қызметтің күйін тексеруге және жергілікті қолдау өтінімінің нобайын дайындауға көмектесе аламын. Өтінім нобайы ешқайда жіберілмейді.",
+      "nodes": [
+        "load_context",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {
+              "language": "Kazakh"
+            },
+            "sources": [
+              "user_memory[demo-user-a]: {'language': 'Kazakh'}"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Сіз жауаптарды қазақ тілінде алуды сұрадыңыз. Мен Wi‑Fi ақауларын шешуге, құпиясөзді қалпына келтіру жолдарын көрсетуге, қызметтің күйін тексеруге және жергілікті қолдау өтінімінің нобайын дайындауға көмектесе аламын. Өтінім нобайы ешқайда жіберілмейді."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: {'language': 'Kazakh'}"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    }
+  ]
+}

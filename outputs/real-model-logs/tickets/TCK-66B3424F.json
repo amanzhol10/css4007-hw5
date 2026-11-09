@@ -1,0 +1,23 @@
+{
+  "ticket_id": "TCK-66B3424F",
+  "status": "draft",
+  "user_id": "demo-user-a",
+  "thread_id": "s06",
+  "category": "wifi",
+  "summary": "Campus-Demo will not connect.",
+  "steps_tried": [
+    "Enabled Wi-Fi.",
+    "Forgot the saved network.",
+    "Tried connecting to Campus-Demo."
+  ],
+  "service_status": {
+    "service": "wifi",
+    "status": "operational",
+    "message": "The demo Wi-Fi service has no reported outage.",
+    "profile": "normal"
+  },
+  "status_profile": "normal",
+  "reference_ids": [
+    "GUIDE-WIFI"
+  ]
+}

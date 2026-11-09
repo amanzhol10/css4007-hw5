@@ -32,7 +32,7 @@ def make_model(kind):
         name = os.environ.get("MODEL_NAME")
         if not os.environ.get("OPENAI_API_KEY") or not name:
             raise SystemExit("Set OPENAI_API_KEY and MODEL_NAME in the environment or in .env first.")
-        return ChatOpenAI(model=name, temperature=0), f"OpenAI via langchain-openai, model {name}"
+        return ChatOpenAI(model=name), f"OpenAI via langchain-openai, model {name}"
     raise SystemExit(f"unknown model kind: {kind}")
 
 

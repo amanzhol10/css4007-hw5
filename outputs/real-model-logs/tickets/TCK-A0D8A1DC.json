@@ -1,0 +1,21 @@
+{
+  "ticket_id": "TCK-A0D8A1DC",
+  "status": "draft",
+  "user_id": "demo-user-a",
+  "thread_id": "s09",
+  "category": "wifi",
+  "summary": "Wi-Fi still fails after enabling it and trying to reconnect.",
+  "steps_tried": [
+    "Enabled Wi-Fi",
+    "Tried reconnecting"
+  ],
+  "service_status": {
+    "service": "wifi",
+    "status": "not_checked",
+    "message": "Service status was not checked in this conversation."
+  },
+  "status_profile": "normal",
+  "reference_ids": [
+    "GUIDE-WIFI"
+  ]
+}

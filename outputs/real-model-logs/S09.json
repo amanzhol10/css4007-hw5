@@ -1,0 +1,168 @@
+{
+  "scenario_id": "S09",
+  "title": "Missing ticket details",
+  "part": 2,
+  "status_profile": "normal",
+  "graph_variant": null,
+  "model": "OpenAI via langchain-openai, model gpt-6-luna",
+  "command": "python -m helpdesk scenario S09 --model openai --out outputs\\real-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 3060,
+      "user_id": "demo-user-a",
+      "thread_id": "s09",
+      "status_profile": "normal",
+      "message": "Prepare a support ticket.",
+      "reply": "What’s the problem—Wi-Fi or password recovery—and what steps have you already tried? I need those details to prepare the ticket draft.",
+      "nodes": [
+        "load_context",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "What’s the problem—Wi-Fi or password recovery—and what steps have you already tried? I need those details to prepare the ticket draft."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    },
+    {
+      "index": 1,
+      "action": "message",
+      "pid": 3060,
+      "user_id": "demo-user-a",
+      "thread_id": "s09",
+      "status_profile": "normal",
+      "message": "The issue is Wi-Fi. I enabled it and tried reconnecting, but it still fails.",
+      "reply": "Prepared a local Wi-Fi support ticket draft (TCK-A0D8A1DC). Nothing was sent to a real helpdesk.",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "prepare_ticket",
+                    "args": {
+                      "category": "wifi",
+                      "summary": "Wi-Fi still fails after enabling it and trying to reconnect.",
+                      "steps_tried": [
+                        "Enabled Wi-Fi",
+                        "Tried reconnecting"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"created\": true, \"ticket_id\": \"TCK-A0D8A1DC\", \"path\": \"outputs/real-model-logs/tickets/TCK-A0D8A1DC.json\", \"ticket\": {\"ticket_id\": \"TCK-A0D8A1DC\", \"status\": \"draft\", \"user_id\": \"demo-user-a\", \"thread_id\": \"s09\", \"category\": \"wifi\", \"summary\": \"Wi-Fi still fails after enabling it and trying to reconnect.\", \"steps_tried\": [\"Enabled Wi-Fi\", \"Tried reconnecting\"], \"service_status\": {\"service\": \"wifi\", \"status\": \"not_checked\", \"message\": \"Service status was not checked in this conversation.\"}, \"status_profile\": \"normal\", \"reference_ids\": [\"GUIDE-WIFI\"]}, \"message\": \"Local draft saved. Nothing was sent to a real helpdesk.\"}",
+                "tool": "prepare_ticket",
+                "result": {
+                  "created": true,
+                  "ticket_id": "TCK-A0D8A1DC",
+                  "path": "outputs/real-model-logs/tickets/TCK-A0D8A1DC.json",
+                  "ticket": {
+                    "ticket_id": "TCK-A0D8A1DC",
+                    "status": "draft",
+                    "user_id": "demo-user-a",
+                    "thread_id": "s09",
+                    "category": "wifi",
+                    "summary": "Wi-Fi still fails after enabling it and trying to reconnect.",
+                    "steps_tried": [
+                      "Enabled Wi-Fi",
+                      "Tried reconnecting"
+                    ],
+                    "service_status": {
+                      "service": "wifi",
+                      "status": "not_checked",
+                      "message": "Service status was not checked in this conversation."
+                    },
+                    "status_profile": "normal",
+                    "reference_ids": [
+                      "GUIDE-WIFI"
+                    ]
+                  },
+                  "message": "Local draft saved. Nothing was sent to a real helpdesk."
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 1,
+            "sources": [
+              "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Prepared a local Wi-Fi support ticket draft (TCK-A0D8A1DC). Nothing was sent to a real helpdesk."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+        "user_memory[demo-user-a]: empty"
+      ],
+      "tickets": [
+        "outputs/real-model-logs/tickets/TCK-A0D8A1DC.json"
+      ],
+      "limit_reached": false
+    }
+  ]
+}

@@ -1,0 +1,286 @@
+{
+  "scenario_id": "S06",
+  "title": "Instructions then local ticket",
+  "part": 2,
+  "status_profile": "normal",
+  "graph_variant": null,
+  "model": "OpenAI via langchain-openai, model gpt-6-luna",
+  "command": "python -m helpdesk scenario S06 --model openai --out outputs\\real-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 6508,
+      "user_id": "demo-user-a",
+      "thread_id": "s06",
+      "status_profile": "normal",
+      "message": "Show me the Wi-Fi troubleshooting steps.",
+      "reply": "Wi-Fi troubleshooting steps:\n\n1. Make sure Wi-Fi is enabled and airplane mode is off.\n2. Select the **Campus-Demo** network.\n3. If you can’t connect, forget the saved network and try connecting again.\n4. If the problem continues, check the service status before preparing a ticket.",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "find_instructions",
+                    "args": {
+                      "topic": "wifi"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+                "tool": "find_instructions",
+                "result": {
+                  "found": true,
+                  "topic": "wifi",
+                  "title": "Connect to the practice campus network",
+                  "instruction_id": "GUIDE-WIFI",
+                  "steps": [
+                    "Check that Wi-Fi is enabled and airplane mode is off.",
+                    "Select the fictional Campus-Demo network.",
+                    "If connection fails, forget the saved network and try connecting again.",
+                    "If the problem remains, check the service status before preparing a ticket."
+                  ]
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 1,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "reference_file: helpdesk.json GUIDE-WIFI"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Wi-Fi troubleshooting steps:\n\n1. Make sure Wi-Fi is enabled and airplane mode is off.\n2. Select the **Campus-Demo** network.\n3. If you can’t connect, forget the saved network and try connecting again.\n4. If the problem continues, check the service status before preparing a ticket."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty",
+        "reference_file: helpdesk.json GUIDE-WIFI"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    },
+    {
+      "index": 1,
+      "action": "message",
+      "pid": 6508,
+      "user_id": "demo-user-a",
+      "thread_id": "s06",
+      "status_profile": "normal",
+      "message": "I enabled Wi-Fi and forgot the saved network, but Campus-Demo still will not connect. Check whether Wi-Fi is down. If it is operating, prepare a ticket about this problem.",
+      "reply": "Wi-Fi is **operational**; there’s no reported outage. I prepared a local ticket draft (**TCK-66B3424F**) describing that Campus-Demo won’t connect and listing the steps you tried. Nothing was sent to a real helpdesk.",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "conversation_state: 4 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "check_service_status",
+                    "args": {
+                      "service": "wifi"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"service\": \"wifi\", \"status\": \"operational\", \"message\": \"The demo Wi-Fi service has no reported outage.\", \"profile\": \"normal\"}",
+                "tool": "check_service_status",
+                "result": {
+                  "found": true,
+                  "service": "wifi",
+                  "status": "operational",
+                  "message": "The demo Wi-Fi service has no reported outage.",
+                  "profile": "normal"
+                }
+              }
+            ],
+            "status_checks": {
+              "wifi": {
+                "service": "wifi",
+                "status": "operational",
+                "message": "The demo Wi-Fi service has no reported outage.",
+                "profile": "normal"
+              }
+            },
+            "tool_rounds": 1,
+            "sources": [
+              "conversation_state: 4 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty",
+              "reference_file: service_status.json profile=normal"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "prepare_ticket",
+                    "args": {
+                      "category": "wifi",
+                      "summary": "Campus-Demo will not connect.",
+                      "steps_tried": [
+                        "Enabled Wi-Fi.",
+                        "Forgot the saved network.",
+                        "Tried connecting to Campus-Demo."
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"created\": true, \"ticket_id\": \"TCK-66B3424F\", \"path\": \"outputs/real-model-logs/tickets/TCK-66B3424F.json\", \"ticket\": {\"ticket_id\": \"TCK-66B3424F\", \"status\": \"draft\", \"user_id\": \"demo-user-a\", \"thread_id\": \"s06\", \"category\": \"wifi\", \"summary\": \"Campus-Demo will not connect.\", \"steps_tried\": [\"Enabled Wi-Fi.\", \"Forgot the saved network.\", \"Tried connecting to Campus-Demo.\"], \"service_status\": {\"service\": \"wifi\", \"status\": \"operational\", \"message\": \"The demo Wi-Fi service has no reported outage.\", \"profile\": \"normal\"}, \"status_profile\": \"normal\", \"reference_ids\": [\"GUIDE-WIFI\"]}, \"message\": \"Local draft saved. Nothing was sent to a real helpdesk.\"}",
+                "tool": "prepare_ticket",
+                "result": {
+                  "created": true,
+                  "ticket_id": "TCK-66B3424F",
+                  "path": "outputs/real-model-logs/tickets/TCK-66B3424F.json",
+                  "ticket": {
+                    "ticket_id": "TCK-66B3424F",
+                    "status": "draft",
+                    "user_id": "demo-user-a",
+                    "thread_id": "s06",
+                    "category": "wifi",
+                    "summary": "Campus-Demo will not connect.",
+                    "steps_tried": [
+                      "Enabled Wi-Fi.",
+                      "Forgot the saved network.",
+                      "Tried connecting to Campus-Demo."
+                    ],
+                    "service_status": {
+                      "service": "wifi",
+                      "status": "operational",
+                      "message": "The demo Wi-Fi service has no reported outage.",
+                      "profile": "normal"
+                    },
+                    "status_profile": "normal",
+                    "reference_ids": [
+                      "GUIDE-WIFI"
+                    ]
+                  },
+                  "message": "Local draft saved. Nothing was sent to a real helpdesk."
+                }
+              }
+            ],
+            "status_checks": {
+              "wifi": {
+                "service": "wifi",
+                "status": "operational",
+                "message": "The demo Wi-Fi service has no reported outage.",
+                "profile": "normal"
+              }
+            },
+            "tool_rounds": 2,
+            "sources": [
+              "conversation_state: 4 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty",
+              "reference_file: service_status.json profile=normal"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Wi-Fi is **operational**; there’s no reported outage. I prepared a local ticket draft (**TCK-66B3424F**) describing that Campus-Demo won’t connect and listing the steps you tried. Nothing was sent to a real helpdesk."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "conversation_state: 4 earlier messages loaded from the checkpoint of this thread",
+        "user_memory[demo-user-a]: empty",
+        "reference_file: service_status.json profile=normal"
+      ],
+      "tickets": [
+        "outputs/real-model-logs/tickets/TCK-66B3424F.json"
+      ],
+      "limit_reached": false
+    }
+  ]
+}
