@@ -1,0 +1,21 @@
+{
+  "ticket_id": "TCK-F16744B3",
+  "status": "draft",
+  "user_id": "demo-user-a",
+  "thread_id": "s09",
+  "category": "wifi",
+  "summary": "Wi-Fi connection still fails after the steps the user already tried.",
+  "steps_tried": [
+    "Enabled Wi-Fi",
+    "Tried reconnecting"
+  ],
+  "service_status": {
+    "service": "wifi",
+    "status": "not_checked",
+    "message": "Service status was not checked in this conversation."
+  },
+  "status_profile": "normal",
+  "reference_ids": [
+    "GUIDE-WIFI"
+  ]
+}

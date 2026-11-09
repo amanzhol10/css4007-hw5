@@ -1,0 +1,95 @@
+{
+  "scenario_id": "S10",
+  "title": "Use the current conversation",
+  "part": 3,
+  "status_profile": "normal",
+  "graph_variant": null,
+  "model": "FAKE rule-based model (not an LLM; used for tests and offline runs)",
+  "command": "python -m helpdesk scenario S10 --model fake --out outputs/fake-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 882,
+      "user_id": "demo-user-a",
+      "thread_id": "s10",
+      "status_profile": "normal",
+      "message": "I cannot connect to Wi-Fi. I enabled it and forgot the saved network, but reconnecting failed.",
+      "reply": "Noted: a Wi-Fi problem. Steps you already tried: Enabled Wi-Fi, Forgot the saved network, Tried reconnecting. I can check the service status or prepare a ticket draft if you want.",
+      "nodes": [
+        "load_context",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Noted: a Wi-Fi problem. Steps you already tried: Enabled Wi-Fi, Forgot the saved network, Tried reconnecting. I can check the service status or prepare a ticket draft if you want."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    },
+    {
+      "index": 1,
+      "action": "message",
+      "pid": 882,
+      "user_id": "demo-user-a",
+      "thread_id": "s10",
+      "status_profile": "normal",
+      "message": "Which steps did I already try?",
+      "reply": "In this conversation you reported a Wi-Fi problem and said you already tried: Enabled Wi-Fi, Forgot the saved network, Tried reconnecting.",
+      "nodes": [
+        "load_context",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "In this conversation you reported a Wi-Fi problem and said you already tried: Enabled Wi-Fi, Forgot the saved network, Tried reconnecting."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+        "user_memory[demo-user-a]: empty"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    }
+  ]
+}

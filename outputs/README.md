@@ -1,5 +1,9 @@
 # Save your own results here
 
-Commit small text or JSON logs for the supplied scenarios. Start each log with its scenario identifier and record the command, snapshot, user and thread. Include your actual node/tool trace and final reply. Keep local ticket drafts here if they contain only invented demo data. Store live memory under the ignored local-storage directory.
+Folders:
 
-This starter contains no completed runs. Do not present the illustrative conversations from SCENARIOS.md as results from your code.
+- `part1/` - state after every node for the four Part 1 messages, original and changed graph
+- `diagrams/` - Mermaid drawings generated from the compiled graphs
+- `direct-tools/` - the three tools called directly
+- `fake-model-logs/` - S01-S14 and the loop-limit demonstration, produced with the offline FAKE rule-based model
+- `real-model-logs/` - S01-S14 with a real model (generate with your own key)

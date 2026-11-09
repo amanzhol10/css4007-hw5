@@ -1,0 +1,139 @@
+== S01 - Simple Wi-Fi route (profile=normal) ==
+  [pid 844] user=demo-user-a thread=s01
+  User: I cannot connect to Wi-Fi.
+  Route: START -> read_request -> wifi_help -> END
+  Reply: Connect to the practice campus network (GUIDE-WIFI):
+         1. Check that Wi-Fi is enabled and airplane mode is off.
+         2. Select the fictional Campus-Demo network.
+         3. If connection fails, forget the saved network and try connecting again.
+         4. If the problem remains, check the service status before preparing a ticket.
+  log saved: outputs/fake-model-logs/S01.json
+== S02 - Case-insensitive password route (profile=normal) ==
+  [pid 845] user=demo-user-a thread=s02
+  User: I forgot my PASSWORD.
+  Route: START -> read_request -> password_help -> END
+  Reply: Recover access to the practice account (GUIDE-PASSWORD):
+         1. Open the practice sign-in screen and choose Forgot password.
+         2. Follow the recovery instructions shown by the practice application.
+         3. If recovery is unavailable, prepare a ticket describing the error.
+         4. Never include a password or recovery code in a ticket.
+  log saved: outputs/fake-model-logs/S02.json
+== S03 - Unsupported request (profile=normal) ==
+  [pid 846] user=demo-user-a thread=s03
+  User: My laptop screen is broken.
+  Route: START -> read_request -> other_help -> END
+  Reply: Is your problem about Wi-Fi or about a password?
+  log saved: outputs/fake-model-logs/S03.json
+== S04 - Two topics before the graph change (profile=normal) ==
+  [pid 847] user=demo-user-a thread=s04
+  User: My Wi-Fi password does not work.
+  Route: START -> read_request -> wifi_help -> END
+  Reply: Connect to the practice campus network (GUIDE-WIFI):
+         1. Check that Wi-Fi is enabled and airplane mode is off.
+         2. Select the fictional Campus-Demo network.
+         3. If connection fails, forget the saved network and try connecting again.
+         4. If the problem remains, check the service status before preparing a ticket.
+  log saved: outputs/fake-model-logs/S04.json
+== S05 - Two topics after adding clarification (profile=normal) ==
+  [pid 848] user=demo-user-a thread=s05
+  User: My Wi-Fi password does not work.
+  Route: START -> read_request -> clarify_problem -> END
+  Reply: Is the problem connecting to Wi-Fi, or recovering your account password? Tell me which one you want to solve first.
+  log saved: outputs/fake-model-logs/S05.json
+== S06 - Instructions then local ticket (profile=normal) ==
+  [pid 849] user=demo-user-a thread=s06
+  User: Show me the Wi-Fi troubleshooting steps.
+  Route: load_context -> agent -> tools -> agent
+  Reply: Connect to the practice campus network (GUIDE-WIFI):
+         1. Check that Wi-Fi is enabled and airplane mode is off.
+         2. Select the fictional Campus-Demo network.
+         3. If connection fails, forget the saved network and try connecting again.
+         4. If the problem remains, check the service status before preparing a ticket.
+  [pid 849] user=demo-user-a thread=s06
+  User: I enabled Wi-Fi and forgot the saved network, but Campus-Demo still will not connect. Check whether Wi-Fi is down. If it is operating, prepare a ticket about this problem.
+  Route: load_context -> agent -> tools -> agent -> tools -> agent
+  Reply: I prepared a local ticket draft TCK-11B54555 (file: outputs/fake-model-logs/tickets/TCK-11B54555.json). It records the problem and the steps you told me you already tried: Enabled Wi-Fi, Forgot the saved network. Known service status: operational. Nothing has been sent to a real helpdesk.
+  log saved: outputs/fake-model-logs/S06.json
+== S07 - The same request during a Wi-Fi outage (profile=wifi_outage) ==
+  [pid 860] user=demo-user-a thread=s07
+  User: I enabled Wi-Fi and forgot the saved network, but Campus-Demo still will not connect. Check whether Wi-Fi is down. If it is operating, prepare a ticket about this problem.
+  Route: load_context -> agent -> tools -> agent
+  Reply: The demo Wi-Fi service is unavailable across campus. The fixture gives no repair time. Your request said to prepare a ticket only if the service was operating, so I have not prepared one.
+  log saved: outputs/fake-model-logs/S07.json
+== S08 - Status source unavailable (profile=status_unavailable) ==
+  [pid 866] user=demo-user-a thread=s08
+  User: Check whether Wi-Fi is down. If it is operating, prepare a ticket. I already enabled Wi-Fi and reconnected, with no success.
+  Route: load_context -> agent -> tools -> agent
+  Reply: I could not determine the Wi-Fi status. I cannot confirm that it is operating. Would you like a ticket draft explaining that the status could not be checked?
+  log saved: outputs/fake-model-logs/S08.json
+== S09 - Missing ticket details (profile=normal) ==
+  [pid 872] user=demo-user-a thread=s09
+  User: Prepare a support ticket.
+  Route: load_context -> agent
+  Reply: What problem are you having, and what have you already tried?
+  [pid 872] user=demo-user-a thread=s09
+  User: The issue is Wi-Fi. I enabled it and tried reconnecting, but it still fails.
+  Route: load_context -> agent -> tools -> agent
+  Reply: I prepared a local ticket draft TCK-F16744B3 (file: outputs/fake-model-logs/tickets/TCK-F16744B3.json). It records the problem and the steps you told me you already tried: Enabled Wi-Fi, Tried reconnecting. The service status was not checked. Nothing has been sent to a real helpdesk.
+  log saved: outputs/fake-model-logs/S09.json
+== S10 - Use the current conversation (profile=normal) ==
+  [pid 882] user=demo-user-a thread=s10
+  User: I cannot connect to Wi-Fi. I enabled it and forgot the saved network, but reconnecting failed.
+  Route: load_context -> agent
+  Reply: Noted: a Wi-Fi problem. Steps you already tried: Enabled Wi-Fi, Forgot the saved network, Tried reconnecting. I can check the service status or prepare a ticket draft if you want.
+  [pid 882] user=demo-user-a thread=s10
+  User: Which steps did I already try?
+  Route: load_context -> agent
+  Reply: In this conversation you reported a Wi-Fi problem and said you already tried: Enabled Wi-Fi, Forgot the saved network, Tried reconnecting.
+  log saved: outputs/fake-model-logs/S10.json
+== S11 - Persist and recall after restart (profile=normal) ==
+  [pid 892] user=demo-user-a thread=restart-a
+  User: Please remember that I prefer replies in Kazakh. My issue is Wi-Fi. I enabled it and tried reconnecting, but it still fails.
+  Route: load_context -> agent -> tools -> agent
+  Reply: Saved: I will remember that you prefer replies in Kazakh. (This offline demo model cannot translate, so this reply stays in English.)
+         Noted: a Wi-Fi problem. Steps you already tried: Enabled Wi-Fi, Tried reconnecting. I can check the service status or prepare a ticket draft if you want.
+  -- process 892 exits; launching a new process --
+== S11 continued in a NEW process (pid 898) ==
+  [pid 898] user=demo-user-a thread=restart-a
+  User: Which problem and steps did we discuss?
+  Route: load_context -> agent
+  Reply: In this conversation you reported a Wi-Fi problem and said you already tried: Enabled Wi-Fi, Tried reconnecting.
+  log saved: outputs/fake-model-logs/S11.json
+== S12 - Preference across threads without replay (profile=normal) ==
+  [pid 904] user=demo-user-a thread=preference-a1
+  User: Please remember that I prefer replies in Kazakh. I have a Wi-Fi problem.
+  Route: load_context -> agent -> tools -> agent -> tools -> agent
+  Reply: Saved: I will remember that you prefer replies in Kazakh. (This offline demo model cannot translate, so this reply stays in English.)
+         Connect to the practice campus network (GUIDE-WIFI):
+         1. Check that Wi-Fi is enabled and airplane mode is off.
+         2. Select the fictional Campus-Demo network.
+         3. If connection fails, forget the saved network and try connecting again.
+         4. If the problem remains, check the service status before preparing a ticket.
+  -- process 904 exits; launching a new process --
+== S12 continued in a NEW process (pid 910) ==
+  [pid 910] user=demo-user-a thread=preference-a2
+  User: Which language did I ask you to use? What can you help with?
+  Route: load_context -> agent
+  Reply: You asked me to reply in Kazakh. I can help with: Wi-Fi troubleshooting; Password recovery guidance; Service status lookup; Preparing local ticket drafts.
+  log saved: outputs/fake-model-logs/S12.json
+== S13 - Do not share memory between users (profile=normal) ==
+  [pid 916] user=demo-user-a thread=isolation-a
+  User: Please remember that I prefer replies in Kazakh. I have a Wi-Fi problem.
+  Route: load_context -> agent -> tools -> agent -> tools -> agent
+  Reply: Saved: I will remember that you prefer replies in Kazakh. (This offline demo model cannot translate, so this reply stays in English.)
+         Connect to the practice campus network (GUIDE-WIFI):
+         1. Check that Wi-Fi is enabled and airplane mode is off.
+         2. Select the fictional Campus-Demo network.
+         3. If connection fails, forget the saved network and try connecting again.
+         4. If the problem remains, check the service status before preparing a ticket.
+  [pid 916] user=demo-user-b thread=isolation-b
+  User: Have I told you a preferred language or a previous problem?
+  Route: load_context -> agent
+  Reply: No preferred language has been recorded for you. No previous problem has been recorded for you in this conversation.
+  log saved: outputs/fake-model-logs/S13.json
+== S14 - Password recovery outage (profile=recovery_outage) ==
+  [pid 926] user=demo-user-a thread=s14
+  User: My password recovery page is unavailable. Check the service status. Is there a known problem?
+  Route: load_context -> agent -> tools -> agent
+  Reply: The demo account-recovery service is unavailable. The fixture gives no repair time. Status: outage.
+  log saved: outputs/fake-model-logs/S14.json

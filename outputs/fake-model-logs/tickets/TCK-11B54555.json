@@ -1,0 +1,22 @@
+{
+  "ticket_id": "TCK-11B54555",
+  "status": "draft",
+  "user_id": "demo-user-a",
+  "thread_id": "s06",
+  "category": "wifi",
+  "summary": "Wi-Fi connection still fails after the steps the user already tried.",
+  "steps_tried": [
+    "Enabled Wi-Fi",
+    "Forgot the saved network"
+  ],
+  "service_status": {
+    "service": "wifi",
+    "status": "operational",
+    "message": "The demo Wi-Fi service has no reported outage.",
+    "profile": "normal"
+  },
+  "status_profile": "normal",
+  "reference_ids": [
+    "GUIDE-WIFI"
+  ]
+}

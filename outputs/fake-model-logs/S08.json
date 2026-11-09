@@ -1,0 +1,106 @@
+{
+  "scenario_id": "S08",
+  "title": "Status source unavailable",
+  "part": 2,
+  "status_profile": "status_unavailable",
+  "graph_variant": null,
+  "model": "FAKE rule-based model (not an LLM; used for tests and offline runs)",
+  "command": "python -m helpdesk scenario S08 --model fake --out outputs/fake-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 866,
+      "user_id": "demo-user-a",
+      "thread_id": "s08",
+      "status_profile": "status_unavailable",
+      "message": "Check whether Wi-Fi is down. If it is operating, prepare a ticket. I already enabled Wi-Fi and reconnected, with no success.",
+      "reply": "I could not determine the Wi-Fi status. I cannot confirm that it is operating. Would you like a ticket draft explaining that the status could not be checked?",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "check_service_status",
+                    "args": {
+                      "service": "wifi"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"service\": \"wifi\", \"status\": \"unknown\", \"message\": \"The demo Wi-Fi status source is unavailable.\", \"profile\": \"status_unavailable\"}",
+                "tool": "check_service_status",
+                "result": {
+                  "found": true,
+                  "service": "wifi",
+                  "status": "unknown",
+                  "message": "The demo Wi-Fi status source is unavailable.",
+                  "profile": "status_unavailable"
+                }
+              }
+            ],
+            "status_checks": {
+              "wifi": {
+                "service": "wifi",
+                "status": "unknown",
+                "message": "The demo Wi-Fi status source is unavailable.",
+                "profile": "status_unavailable"
+              }
+            },
+            "tool_rounds": 1,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "reference_file: service_status.json profile=status_unavailable"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "I could not determine the Wi-Fi status. I cannot confirm that it is operating. Would you like a ticket draft explaining that the status could not be checked?"
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty",
+        "reference_file: service_status.json profile=status_unavailable"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    }
+  ]
+}

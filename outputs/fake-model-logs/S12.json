@@ -1,0 +1,199 @@
+{
+  "scenario_id": "S12",
+  "title": "Preference across threads without replay",
+  "part": 3,
+  "status_profile": "normal",
+  "graph_variant": null,
+  "model": "FAKE rule-based model (not an LLM; used for tests and offline runs)",
+  "command": "python -m helpdesk scenario S12 --model fake --out outputs/fake-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 904,
+      "user_id": "demo-user-a",
+      "thread_id": "preference-a1",
+      "status_profile": "normal",
+      "message": "Please remember that I prefer replies in Kazakh. I have a Wi-Fi problem.",
+      "reply": "Saved: I will remember that you prefer replies in Kazakh. (This offline demo model cannot translate, so this reply stays in English.)\nConnect to the practice campus network (GUIDE-WIFI):\n1. Check that Wi-Fi is enabled and airplane mode is off.\n2. Select the fictional Campus-Demo network.\n3. If connection fails, forget the saved network and try connecting again.\n4. If the problem remains, check the service status before preparing a ticket.",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "save_user_preference",
+                    "args": {
+                      "language": "Kazakh"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"saved\": true, \"key\": \"language\", \"value\": \"Kazakh\", \"user_id\": \"demo-user-a\"}",
+                "tool": "save_user_preference",
+                "result": {
+                  "saved": true,
+                  "key": "language",
+                  "value": "Kazakh",
+                  "user_id": "demo-user-a"
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 1,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "user_memory[demo-user-a]: wrote language=Kazakh"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "find_instructions",
+                    "args": {
+                      "topic": "wifi"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+                "tool": "find_instructions",
+                "result": {
+                  "found": true,
+                  "topic": "wifi",
+                  "title": "Connect to the practice campus network",
+                  "instruction_id": "GUIDE-WIFI",
+                  "steps": [
+                    "Check that Wi-Fi is enabled and airplane mode is off.",
+                    "Select the fictional Campus-Demo network.",
+                    "If connection fails, forget the saved network and try connecting again.",
+                    "If the problem remains, check the service status before preparing a ticket."
+                  ]
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 2,
+            "sources": [
+              "user_memory[demo-user-a]: empty",
+              "user_memory[demo-user-a]: wrote language=Kazakh",
+              "reference_file: helpdesk.json GUIDE-WIFI"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "Saved: I will remember that you prefer replies in Kazakh. (This offline demo model cannot translate, so this reply stays in English.)\nConnect to the practice campus network (GUIDE-WIFI):\n1. Check that Wi-Fi is enabled and airplane mode is off.\n2. Select the fictional Campus-Demo network.\n3. If connection fails, forget the saved network and try connecting again.\n4. If the problem remains, check the service status before preparing a ticket."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty",
+        "user_memory[demo-user-a]: wrote language=Kazakh",
+        "reference_file: helpdesk.json GUIDE-WIFI"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    },
+    {
+      "index": 1,
+      "action": "restart_process",
+      "terminated_pid": 904
+    },
+    {
+      "index": 2,
+      "action": "message",
+      "pid": 910,
+      "user_id": "demo-user-a",
+      "thread_id": "preference-a2",
+      "status_profile": "normal",
+      "message": "Which language did I ask you to use? What can you help with?",
+      "reply": "You asked me to reply in Kazakh. I can help with: Wi-Fi troubleshooting; Password recovery guidance; Service status lookup; Preparing local ticket drafts.",
+      "nodes": [
+        "load_context",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {
+              "language": "Kazakh"
+            },
+            "sources": [
+              "user_memory[demo-user-a]: {'language': 'Kazakh'}"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "You asked me to reply in Kazakh. I can help with: Wi-Fi troubleshooting; Password recovery guidance; Service status lookup; Preparing local ticket drafts."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: {'language': 'Kazakh'}"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    }
+  ]
+}

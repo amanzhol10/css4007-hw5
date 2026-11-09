@@ -1,0 +1,168 @@
+{
+  "scenario_id": "S09",
+  "title": "Missing ticket details",
+  "part": 2,
+  "status_profile": "normal",
+  "graph_variant": null,
+  "model": "FAKE rule-based model (not an LLM; used for tests and offline runs)",
+  "command": "python -m helpdesk scenario S09 --model fake --out outputs/fake-model-logs --storage local-storage",
+  "events": [
+    {
+      "index": 0,
+      "action": "message",
+      "pid": 872,
+      "user_id": "demo-user-a",
+      "thread_id": "s09",
+      "status_profile": "normal",
+      "message": "Prepare a support ticket.",
+      "reply": "What problem are you having, and what have you already tried?",
+      "nodes": [
+        "load_context",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "What problem are you having, and what have you already tried?"
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "user_memory[demo-user-a]: empty"
+      ],
+      "tickets": [],
+      "limit_reached": false
+    },
+    {
+      "index": 1,
+      "action": "message",
+      "pid": 872,
+      "user_id": "demo-user-a",
+      "thread_id": "s09",
+      "status_profile": "normal",
+      "message": "The issue is Wi-Fi. I enabled it and tried reconnecting, but it still fails.",
+      "reply": "I prepared a local ticket draft TCK-F16744B3 (file: outputs/fake-model-logs/tickets/TCK-F16744B3.json). It records the problem and the steps you told me you already tried: Enabled Wi-Fi, Tried reconnecting. The service status was not checked. Nothing has been sent to a real helpdesk.",
+      "nodes": [
+        "load_context",
+        "agent",
+        "tools",
+        "agent"
+      ],
+      "trace": [
+        {
+          "node": "load_context",
+          "update": {
+            "user_prefs": {},
+            "sources": [
+              "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "",
+                "tool_calls": [
+                  {
+                    "name": "prepare_ticket",
+                    "args": {
+                      "category": "wifi",
+                      "summary": "Wi-Fi connection still fails after the steps the user already tried.",
+                      "steps_tried": [
+                        "Enabled Wi-Fi",
+                        "Tried reconnecting"
+                      ]
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "node": "tools",
+          "update": {
+            "messages": [
+              {
+                "type": "tool",
+                "content": "{\"created\": true, \"ticket_id\": \"TCK-F16744B3\", \"path\": \"outputs/fake-model-logs/tickets/TCK-F16744B3.json\", \"ticket\": {\"ticket_id\": \"TCK-F16744B3\", \"status\": \"draft\", \"user_id\": \"demo-user-a\", \"thread_id\": \"s09\", \"category\": \"wifi\", \"summary\": \"Wi-Fi connection still fails after the steps the user already tried.\", \"steps_tried\": [\"Enabled Wi-Fi\", \"Tried reconnecting\"], \"service_status\": {\"service\": \"wifi\", \"status\": \"not_checked\", \"message\": \"Service status was not checked in this conversation.\"}, \"status_profile\": \"normal\", \"reference_ids\": [\"GUIDE-WIFI\"]}, \"message\": \"Local draft saved. Nothing was sent to a real helpdesk.\"}",
+                "tool": "prepare_ticket",
+                "result": {
+                  "created": true,
+                  "ticket_id": "TCK-F16744B3",
+                  "path": "outputs/fake-model-logs/tickets/TCK-F16744B3.json",
+                  "ticket": {
+                    "ticket_id": "TCK-F16744B3",
+                    "status": "draft",
+                    "user_id": "demo-user-a",
+                    "thread_id": "s09",
+                    "category": "wifi",
+                    "summary": "Wi-Fi connection still fails after the steps the user already tried.",
+                    "steps_tried": [
+                      "Enabled Wi-Fi",
+                      "Tried reconnecting"
+                    ],
+                    "service_status": {
+                      "service": "wifi",
+                      "status": "not_checked",
+                      "message": "Service status was not checked in this conversation."
+                    },
+                    "status_profile": "normal",
+                    "reference_ids": [
+                      "GUIDE-WIFI"
+                    ]
+                  },
+                  "message": "Local draft saved. Nothing was sent to a real helpdesk."
+                }
+              }
+            ],
+            "status_checks": {},
+            "tool_rounds": 1,
+            "sources": [
+              "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+              "user_memory[demo-user-a]: empty"
+            ]
+          }
+        },
+        {
+          "node": "agent",
+          "update": {
+            "messages": [
+              {
+                "type": "ai",
+                "content": "I prepared a local ticket draft TCK-F16744B3 (file: outputs/fake-model-logs/tickets/TCK-F16744B3.json). It records the problem and the steps you told me you already tried: Enabled Wi-Fi, Tried reconnecting. The service status was not checked. Nothing has been sent to a real helpdesk."
+              }
+            ]
+          }
+        }
+      ],
+      "sources": [
+        "conversation_state: 2 earlier messages loaded from the checkpoint of this thread",
+        "user_memory[demo-user-a]: empty"
+      ],
+      "tickets": [
+        "outputs/fake-model-logs/tickets/TCK-F16744B3.json"
+      ],
+      "limit_reached": false
+    }
+  ]
+}

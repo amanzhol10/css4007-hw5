@@ -1,0 +1,285 @@
+{
+  "note": "RunawayModel always requests a tool; shows the loop limit",
+  "model": "FAKE runaway model",
+  "result": {
+    "user_id": "demo-user-a",
+    "thread_id": "loop-limit",
+    "status_profile": "normal",
+    "message": "hello",
+    "reply": "I reached the limit on tool calls for one request and stopped. Please rephrase the request or ask for one thing at a time.",
+    "nodes": [
+      "load_context",
+      "agent",
+      "tools",
+      "agent",
+      "tools",
+      "agent",
+      "tools",
+      "agent",
+      "tools",
+      "agent",
+      "stop_at_limit"
+    ],
+    "trace": [
+      {
+        "node": "load_context",
+        "update": {
+          "user_prefs": {},
+          "sources": [
+            "user_memory[demo-user-a]: empty"
+          ]
+        }
+      },
+      {
+        "node": "agent",
+        "update": {
+          "messages": [
+            {
+              "type": "ai",
+              "content": "",
+              "tool_calls": [
+                {
+                  "name": "find_instructions",
+                  "args": {
+                    "topic": "wifi"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "node": "tools",
+        "update": {
+          "messages": [
+            {
+              "type": "tool",
+              "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+              "tool": "find_instructions",
+              "result": {
+                "found": true,
+                "topic": "wifi",
+                "title": "Connect to the practice campus network",
+                "instruction_id": "GUIDE-WIFI",
+                "steps": [
+                  "Check that Wi-Fi is enabled and airplane mode is off.",
+                  "Select the fictional Campus-Demo network.",
+                  "If connection fails, forget the saved network and try connecting again.",
+                  "If the problem remains, check the service status before preparing a ticket."
+                ]
+              }
+            }
+          ],
+          "status_checks": {},
+          "tool_rounds": 1,
+          "sources": [
+            "user_memory[demo-user-a]: empty",
+            "reference_file: helpdesk.json GUIDE-WIFI"
+          ]
+        }
+      },
+      {
+        "node": "agent",
+        "update": {
+          "messages": [
+            {
+              "type": "ai",
+              "content": "",
+              "tool_calls": [
+                {
+                  "name": "find_instructions",
+                  "args": {
+                    "topic": "wifi"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "node": "tools",
+        "update": {
+          "messages": [
+            {
+              "type": "tool",
+              "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+              "tool": "find_instructions",
+              "result": {
+                "found": true,
+                "topic": "wifi",
+                "title": "Connect to the practice campus network",
+                "instruction_id": "GUIDE-WIFI",
+                "steps": [
+                  "Check that Wi-Fi is enabled and airplane mode is off.",
+                  "Select the fictional Campus-Demo network.",
+                  "If connection fails, forget the saved network and try connecting again.",
+                  "If the problem remains, check the service status before preparing a ticket."
+                ]
+              }
+            }
+          ],
+          "status_checks": {},
+          "tool_rounds": 2,
+          "sources": [
+            "user_memory[demo-user-a]: empty",
+            "reference_file: helpdesk.json GUIDE-WIFI",
+            "reference_file: helpdesk.json GUIDE-WIFI"
+          ]
+        }
+      },
+      {
+        "node": "agent",
+        "update": {
+          "messages": [
+            {
+              "type": "ai",
+              "content": "",
+              "tool_calls": [
+                {
+                  "name": "find_instructions",
+                  "args": {
+                    "topic": "wifi"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "node": "tools",
+        "update": {
+          "messages": [
+            {
+              "type": "tool",
+              "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+              "tool": "find_instructions",
+              "result": {
+                "found": true,
+                "topic": "wifi",
+                "title": "Connect to the practice campus network",
+                "instruction_id": "GUIDE-WIFI",
+                "steps": [
+                  "Check that Wi-Fi is enabled and airplane mode is off.",
+                  "Select the fictional Campus-Demo network.",
+                  "If connection fails, forget the saved network and try connecting again.",
+                  "If the problem remains, check the service status before preparing a ticket."
+                ]
+              }
+            }
+          ],
+          "status_checks": {},
+          "tool_rounds": 3,
+          "sources": [
+            "user_memory[demo-user-a]: empty",
+            "reference_file: helpdesk.json GUIDE-WIFI",
+            "reference_file: helpdesk.json GUIDE-WIFI",
+            "reference_file: helpdesk.json GUIDE-WIFI"
+          ]
+        }
+      },
+      {
+        "node": "agent",
+        "update": {
+          "messages": [
+            {
+              "type": "ai",
+              "content": "",
+              "tool_calls": [
+                {
+                  "name": "find_instructions",
+                  "args": {
+                    "topic": "wifi"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "node": "tools",
+        "update": {
+          "messages": [
+            {
+              "type": "tool",
+              "content": "{\"found\": true, \"topic\": \"wifi\", \"title\": \"Connect to the practice campus network\", \"instruction_id\": \"GUIDE-WIFI\", \"steps\": [\"Check that Wi-Fi is enabled and airplane mode is off.\", \"Select the fictional Campus-Demo network.\", \"If connection fails, forget the saved network and try connecting again.\", \"If the problem remains, check the service status before preparing a ticket.\"]}",
+              "tool": "find_instructions",
+              "result": {
+                "found": true,
+                "topic": "wifi",
+                "title": "Connect to the practice campus network",
+                "instruction_id": "GUIDE-WIFI",
+                "steps": [
+                  "Check that Wi-Fi is enabled and airplane mode is off.",
+                  "Select the fictional Campus-Demo network.",
+                  "If connection fails, forget the saved network and try connecting again.",
+                  "If the problem remains, check the service status before preparing a ticket."
+                ]
+              }
+            }
+          ],
+          "status_checks": {},
+          "tool_rounds": 4,
+          "sources": [
+            "user_memory[demo-user-a]: empty",
+            "reference_file: helpdesk.json GUIDE-WIFI",
+            "reference_file: helpdesk.json GUIDE-WIFI",
+            "reference_file: helpdesk.json GUIDE-WIFI",
+            "reference_file: helpdesk.json GUIDE-WIFI"
+          ]
+        }
+      },
+      {
+        "node": "agent",
+        "update": {
+          "messages": [
+            {
+              "type": "ai",
+              "content": "",
+              "tool_calls": [
+                {
+                  "name": "find_instructions",
+                  "args": {
+                    "topic": "wifi"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "node": "stop_at_limit",
+        "update": {
+          "messages": [
+            {
+              "type": "tool",
+              "content": "{\"error\": \"not executed: tool-call limit reached\"}",
+              "tool": "find_instructions",
+              "result": {
+                "error": "not executed: tool-call limit reached"
+              }
+            },
+            {
+              "type": "ai",
+              "content": "I reached the limit on tool calls for one request and stopped. Please rephrase the request or ask for one thing at a time."
+            }
+          ],
+          "limit_reached": true
+        }
+      }
+    ],
+    "sources": [
+      "user_memory[demo-user-a]: empty",
+      "reference_file: helpdesk.json GUIDE-WIFI",
+      "reference_file: helpdesk.json GUIDE-WIFI",
+      "reference_file: helpdesk.json GUIDE-WIFI",
+      "reference_file: helpdesk.json GUIDE-WIFI"
+    ],
+    "tickets": [],
+    "limit_reached": true
+  }
+}
