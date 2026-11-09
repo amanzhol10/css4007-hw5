@@ -1,0 +1,8 @@
+{
+  "created": false,
+  "missing": [
+    "problem description",
+    "steps already tried"
+  ],
+  "message": "Ask the user for the missing information. Do not invent it."
+}

@@ -1,0 +1,7 @@
+{
+  "found": true,
+  "service": "wifi",
+  "status": "outage",
+  "message": "The demo Wi-Fi service is unavailable across campus. The fixture gives no repair time.",
+  "profile": "wifi_outage"
+}

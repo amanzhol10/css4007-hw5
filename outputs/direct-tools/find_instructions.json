@@ -1,0 +1,12 @@
+{
+  "found": true,
+  "topic": "wifi",
+  "title": "Connect to the practice campus network",
+  "instruction_id": "GUIDE-WIFI",
+  "steps": [
+    "Check that Wi-Fi is enabled and airplane mode is off.",
+    "Select the fictional Campus-Demo network.",
+    "If connection fails, forget the saved network and try connecting again.",
+    "If the problem remains, check the service status before preparing a ticket."
+  ]
+}

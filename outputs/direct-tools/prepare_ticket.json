@@ -1,0 +1,27 @@
+{
+  "created": true,
+  "ticket_id": "TCK-9F034B93",
+  "path": "outputs/direct-tools/tickets/TCK-9F034B93.json",
+  "ticket": {
+    "ticket_id": "TCK-9F034B93",
+    "status": "draft",
+    "user_id": "demo-user-a",
+    "thread_id": "direct",
+    "category": "wifi",
+    "summary": "Wi-Fi still fails",
+    "steps_tried": [
+      "Enabled Wi-Fi",
+      "Forgot the saved network"
+    ],
+    "service_status": {
+      "service": "wifi",
+      "status": "not_checked",
+      "message": "Service status was not checked in this conversation."
+    },
+    "status_profile": "normal",
+    "reference_ids": [
+      "GUIDE-WIFI"
+    ]
+  },
+  "message": "Local draft saved. Nothing was sent to a real helpdesk."
+}

@@ -1,0 +1,7 @@
+{
+  "found": true,
+  "service": "wifi",
+  "status": "unknown",
+  "message": "The demo Wi-Fi status source is unavailable.",
+  "profile": "status_unavailable"
+}
