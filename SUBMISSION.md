@@ -138,7 +138,7 @@ I did not hard-code the language: the model called `save_user_preference {langua
 
 ## Part 4 - Running and checking my work
 
-README: `README.md` (install, `.env`, run commands, scenarios, where memory is stored and how to clear it with `python -m helpdesk reset`). Dependencies are pinned in `requirements.txt`. Python version: `<<FILL IN: output of python --version on your computer>>` (I also developed on 3.12.3 and CI uses 3.12). CI: `.github/workflows/tests.yml` runs `python -m pytest -q` on every push without any API key. All tests use the fake model; the real-model demonstration is run by hand and is never run by CI. CI result: `<<FILL IN: link to the green Actions run>>`.
+README: `README.md` (install, `.env`, run commands, scenarios, where memory is stored and how to clear it with `python -m helpdesk reset`). Dependencies are pinned in `requirements.txt`. Python version: `3.13.15` (I also developed on 3.12.3 and CI uses 3.12). CI: `.github/workflows/tests.yml` runs `python -m pytest -q` on every push without any API key. All tests use the fake model; the real-model demonstration is run by hand and is never run by CI. CI result: `https://github.com/amanzhol10/css4007-hw5/actions/runs/42689245810`.
 
 | Test file | What it would catch |
 | --- | --- |
