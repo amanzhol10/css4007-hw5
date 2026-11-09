@@ -2,8 +2,6 @@
 
 **Where the evidence is.** Part 1 uses no model. Parts 2 and 3 were run with a real model: provider **OpenAI** (through `langchain-openai`), model **`gpt-6-luna`**. Those logs are in `outputs/real-model-logs/` and are the main demonstration. The tests and CI use a clearly labelled offline **FAKE rule-based model** (`helpdesk/fake_model.py`, not an LLM). Runs with it are kept in `outputs/fake-model-logs/` only for comparison.
 
-Items marked `<<FILL IN>>` need your own value before you submit (list at the end).
-
 ## Part 1 - How the graph works
 
 ### My graph and state
@@ -138,7 +136,7 @@ I did not hard-code the language: the model called `save_user_preference {langua
 
 ## Part 4 - Running and checking my work
 
-README: `README.md` (install, `.env`, run commands, scenarios, where memory is stored and how to clear it with `python -m helpdesk reset`). Dependencies are pinned in `requirements.txt`. Python version: `3.13.15` (I also developed on 3.12.3 and CI uses 3.12). CI: `.github/workflows/tests.yml` runs `python -m pytest -q` on every push without any API key. All tests use the fake model; the real-model demonstration is run by hand and is never run by CI. CI result: `https://github.com/amanzhol10/css4007-hw5/actions/runs/42689245810`.
+README: `README.md` (install, `.env`, run commands, scenarios, where memory is stored and how to clear it with `python -m helpdesk reset`). Dependencies are pinned in `requirements.txt`. Python version on my computer: `3.13.15`. CI uses Python 3.12. CI: `.github/workflows/tests.yml` runs `python -m pytest -q` on every push without any API key. All tests use the fake model; the real-model demonstration is run by hand and is never run by CI. CI result: `https://github.com/amanzhol10/css4007-hw5/actions/runs/42689245810`.
 
 | Test file | What it would catch |
 | --- | --- |
@@ -185,8 +183,3 @@ Command pattern: `python -m helpdesk scenario <ID> --model openai --out outputs/
 | S14 - Password recovery outage | `scenario S14` | `outputs/real-model-logs/S14.json` | looked up `account_recovery` (not Wi-Fi); reported a known problem and no repair time |
 
 If a run behaved wrongly, the places I would change first are the system prompt in `helpdesk/agent.py` (for example "quote only steps the user stated", "do not call tools the user did not ask for") and the tool descriptions in `helpdesk/tools.py`.
-
-## Before submitting: fill in
-
-1. The Python version line in Part 4.
-2. The link to the green GitHub Actions run in Part 4.
